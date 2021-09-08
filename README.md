@@ -19,6 +19,8 @@ The shaders should be “unlit” because we are going to implement the lighting
 9. animated vertex distortion
 10. cutout 
 
+## Due Date
+
 **The assignment is due on Sunday September 19th before midnight.**
 
 ## Resources
