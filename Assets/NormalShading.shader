@@ -1,4 +1,4 @@
-Shader "Hidden/Diffuse"
+Shader "Unlit/normal"
 {
     Properties
     {
@@ -6,8 +6,8 @@ Shader "Hidden/Diffuse"
     }
     SubShader
     {
-        // No culling or depth
-        Cull Off ZWrite Off ZTest Always
+        Tags { "RenderType"="Opaque" }
+        LOD 100
 
         Pass
         {
@@ -19,40 +19,42 @@ Shader "Hidden/Diffuse"
 
             struct appdata
             {
+                // vertex in model space
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
-                float3 normal: NORMAL;
+
+                // normal in model space
+                float3 normal : NORMAL;
             };
 
             struct v2f
             {
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
-                float3 normal: NORMAL;
+                float3 normal : NORMAL;
+                float3 worldPos : TEXCOORD1;
+
             };
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-
-                
-                // float4 p = mul(UNITY_MATRIX_M, v.vertex)
-                // p = mul(UNITY_MATRIX_V, p);
-                // p = mul(UNITY_MATRIX_P, p);
-
-                o.normal = v.normal;
+                o.normal = mul(unity_ObjectToWorld, float4(v.normal, 0));
+                o.worldPos = mul(unity_ObjectToWorld, v.vertex);
                 return o;
             }
 
             float4 _color;
 
-            fixed4 frag (v2f i) : SV_Target
+            fixed4 frag(v2f i) : SV_Target
             {
-               //sample texture
-                float3 lightDir = float3(1,0,0);
-                float brightness = dot(i.normal, lightDir);
+                float3 lightDir = _WorldSpaceCameraPos - i.worldPos;
+                lightDir = normalize(lightDir);
+                float3 n = normalize(i.normal);
+                float brightness = dot(n, lightDir);
                 fixed4 col = brightness * _color;
+
                 return col;
             }
             ENDCG
