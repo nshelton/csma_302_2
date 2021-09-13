@@ -1,4 +1,4 @@
-Shader "Unlit/normal"
+Shader "Unlit/NormalShader"
 {
     Properties
     {
@@ -51,7 +51,9 @@ Shader "Unlit/normal"
             {
                 float3 lightDir = _WorldSpaceCameraPos - i.worldPos;
                 lightDir = normalize(lightDir);
+
                 float3 n = normalize(i.normal);
+
                 float brightness = dot(n, lightDir);
                 fixed4 col = brightness * _color;
 
