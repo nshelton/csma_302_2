@@ -1,13 +1,13 @@
-Shader "Hidden/Diffuse"
+Shader "Unlit/1"
 {
     Properties
     {
-        _Color("Color", Color) = (.25, .5, .5, 1)
+        _color("color", Color) = (.25, .5, .5, 1)
     }
     SubShader
     {
-        // No culling or depth
-        Cull Off ZWrite Off ZTest Always
+        Tags { "RenderType"="Opaque" }
+        LOD 100
 
         Pass
         {
@@ -19,6 +19,7 @@ Shader "Hidden/Diffuse"
 
             struct appdata
             {
+                // vertex in model space
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
             };
@@ -33,15 +34,16 @@ Shader "Hidden/Diffuse"
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
+
                 return o;
             }
 
-            float4 _Color;
+            float4 _color;
 
             fixed4 frag (v2f i) : SV_Target
             {
-                //sample texture
-                fixed4 col = _Color;
+
+                fixed4 col = _color;
                 return col;
             }
             ENDCG
