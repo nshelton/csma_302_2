@@ -41,6 +41,7 @@ Shader "Unlit/Normal"
         v2f o;
         o.vertex = UnityObjectToClipPos(v.vertex);
         o.normal = mul(unity_ObjectToWorld, float4(v.normal, 0));
+        o.normal = normalize(o.normal);
         o.worldPos = mul(unity_ObjectToWorld, v.vertex);
         return o;
     }
@@ -51,7 +52,9 @@ Shader "Unlit/Normal"
     {
         float3 lightDir = _WorldSpaceCameraPos - i.worldPos;
         lightDir = normalize(lightDir);
-        float3 n = normalize(i.normal);
+
+        float3 n = i.normal;
+
         float brightness = dot(n, lightDir);
         fixed4 col = brightness * _color;
 
@@ -61,4 +64,3 @@ Shader "Unlit/Normal"
 }
     }
 }
-

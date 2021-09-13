@@ -1,9 +1,10 @@
-Shader "Unlit/NormalMap"
+Shader "Unlit/MatCap"
 {
     Properties
     {
         _color("color", Color) = (.25, .5, .5, 1)
         _NormalMap("normal map", 2D) = "blue" {}
+        _MatcapTexture("matcapTexture", 2D) = "white" {}
     }
         SubShader
     {
@@ -42,6 +43,7 @@ Shader "Unlit/NormalMap"
 
     v2f vert(appdata v)
     {
+
         v2f o;
         o.vertex = UnityObjectToClipPos(v.vertex);
         o.normal = mul(unity_ObjectToWorld, float4(v.normal, 0));
@@ -60,6 +62,7 @@ Shader "Unlit/NormalMap"
 
     float4 _color;
     sampler2D _NormalMap;
+    sampler2D _MatcapTexture;
 
     float3 worldNormalFromMap(v2f i)
     {
@@ -76,18 +79,14 @@ Shader "Unlit/NormalMap"
 
     fixed4 frag(v2f i) : SV_Target
     {
-        float3 worldNormal = worldNormalFromMap(i);
+        float3 worldSpaceNormal = worldNormalFromMap(i);
 
-        float3 lightDir = _WorldSpaceCameraPos - i.worldPos;
-        lightDir = normalize(lightDir);
+        float3 viewSpaceNormal = mul(UNITY_MATRIX_V, float4(worldSpaceNormal, 0));
 
-        float3 n = worldNormal;
+        // scale [-1, 1] to [0, 1]
+        float2 muv = viewSpaceNormal.xy * 0.5 + 0.5;
 
-        float brightness = dot(n, lightDir);
-        fixed4 col = brightness * _color;
-
-
-        return col;
+        return tex2D(_MatcapTexture, float2(muv.x, muv.y));;
     }
     ENDCG
 }
