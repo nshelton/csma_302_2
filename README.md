@@ -48,7 +48,7 @@ Unity shaders:
  - https://docs.unity3d.com/Manual/SL-SurfaceShaderExamples.html
 
  - https://catlikecoding.com/unity/tutorials/rendering/
- - 
+ 
  - https://catlikecoding.com/unity/tutorials/rendering/part-2/
 
 
@@ -56,7 +56,7 @@ Unity shaders:
 
 8 points per effect implemented (up to 10)
 
-10 points for project organization ( top-level folders),  short README describing the effects and how the UI works.
+10 points for project organization ( top-level folders), and do the number keys change through 10 materials? 
 
 10 points for code organization (indentation, comments, descriptive variable names, creating functions for each effect)
 
