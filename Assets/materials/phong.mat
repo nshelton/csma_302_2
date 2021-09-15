@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: lambert
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: phong
+  m_Shader: {fileID: 4800000, guid: 61763d983b71e9d48bee201afbee1a3b, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -72,7 +72,11 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - _shininess: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ambient: {r: 0.5019608, g: 0.2509804, b: 0.48931193, a: 1}
+    - _color: {r: 0.31061354, g: 0.2509804, b: 0.5019608, a: 1}
+    - _highlight: {r: 0.5019608, g: 0.25973165, b: 0.2509804, a: 1}
   m_BuildTextureStacks: []
