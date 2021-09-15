@@ -89,6 +89,6 @@ Shader "Unlit/MatCap"
         return tex2D(_MatcapTexture, float2(muv.x, muv.y));;
     }
     ENDCG
-}
     }
+  }
 }
