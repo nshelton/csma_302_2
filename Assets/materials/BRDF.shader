@@ -81,23 +81,23 @@ Shader "Unlit/BRDF"
 
                 float3 worldNormal = worldNormalFromMap(i);
 
-                float3 lightDir = _WorldSpaceCameraPos - i.worldPos;
+                float3 lightDir = _WorldSpaceLightPos0.xyz;
                 lightDir = normalize(lightDir);
 
                 float3 n = worldNormal;
                 float brightness = dot(n, lightDir);
 
                 float3 viewDir = normalize(_WorldSpaceCameraPos - i.worldPos);
-                float viewAngle = dot(viewDir, i.normal);
+                float viewAngle = dot(viewDir, worldNormal);
                 //float lightAngle = dot(lightDir, i.normal); //<--- uncomment this to see the difference if lightAngle wasn't scaled.
-                float lightAngle = dot(lightDir, i.normal) / 2 + 0.5;
+                float lightAngle = dot(lightDir, worldNormal) / 2 + 0.5;
 
                 // I noticed when the lightAngle wasn't scaled, the colors were darker on the model and the edges were highlighted much
                 // I think lightAngle is scaled because if it wasn't the edges of the model would just look like shadows rather than a highlight of the edges.
 
                 fixed4 col = tex2D(_BRDF, float2(viewAngle, lightAngle));               
 
-                return brightness * col;
+                return col;
             }
             ENDCG
 
