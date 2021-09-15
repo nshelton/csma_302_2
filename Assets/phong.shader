@@ -1,4 +1,4 @@
-Shader "Unlit/normal"
+Shader "Unlit/phong"
 {
     Properties
     {

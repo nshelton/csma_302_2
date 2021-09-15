@@ -1,4 +1,4 @@
-Shader "Unlit/1"
+Shader "Unlit/diffuse"
 {
     Properties
     {
