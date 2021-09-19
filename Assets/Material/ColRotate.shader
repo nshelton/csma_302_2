@@ -1,10 +1,12 @@
-Shader "Unlit/NormalMap"
+Shader "Unlit/ColRotate"
 {
 
 Properties
 {
 	_color("color", Color) = (.25, .5, .5, 1)
 	_NormalMap("normal map", 2D) = "blue" {}
+	_toonThreshold("toonThreshold", Range(0,1)) = 1
+
 }
 
 	SubShader
@@ -61,6 +63,7 @@ Properties
 
 		float4 _color;
 		sampler2D _NormalMap;
+		float _toonThreshold;
 
 		float3 worldNormalFromMap(v2f i)
 		{
@@ -82,14 +85,18 @@ Properties
 			float3 worldNormal = worldNormalFromMap(i);
 
 			//Calculate world space viewDir
-			float3 lightDir = _WorldSpaceCameraPos - i.worldPos;
-			lightDir = normalize(lightDir);
+			float3 viewDir = _WorldSpaceCameraPos - i.worldPos;
+			viewDir = normalize(viewDir);
 
-			float3 n = worldNormal;
-
-			float brightness = dot(n, lightDir);
-			fixed4 col = brightness * _color;
-
+			float3 n = normalize(worldNormal);
+			
+			float map = dot(n, viewDir);
+			map - smoothstep(_toonThreshold - 0.1, _toonThreshold - 0.1, map);
+			float4 col = map * _color;
+		
+			//rotate red and green values around model
+			col.rg = n * tan(_Time.z/5);
+			
 			return col;
 		}
 		

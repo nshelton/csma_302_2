@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Toon
-  m_Shader: {fileID: 4800000, guid: f039ead4605be424fbfd6316019a1089, type: 3}
+  m_Name: ColRotate
+  m_Shader: {fileID: 4800000, guid: b5201d2622eb78a41b38083fd05c2340, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -76,12 +76,12 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _shininess: 1.07
-    - _toonThreshold: 1
+    - _shininess: 0.1
+    - _toonThreshold: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ambient: {r: 0, g: 0, b: 0, a: 1}
-    - _color: {r: 1, g: 1, b: 1, a: 1}
-    - _highlight: {r: 1, g: 0.64533323, b: 0, a: 1}
+    - _ambient: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
+    - _color: {r: 0, g: 0, b: 0, a: 1}
+    - _highlight: {r: 0.33962262, g: 0.05339976, b: 0.05339976, a: 1}
   m_BuildTextureStacks: []

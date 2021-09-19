@@ -80,6 +80,7 @@ Shader "Unlit/Chrome"
         {
             float3 worldNormal = worldNormalFromMap(i);
 
+            //Calculate world space viewDir
             float3 viewDir =  i.worldPos - _WorldSpaceCameraPos;
             viewDir = normalize(viewDir);
 
