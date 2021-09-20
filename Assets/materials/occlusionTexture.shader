@@ -63,6 +63,7 @@ Shader "Unlit/occlusionTexture"
 
             fixed4 frag(v2f i) : SV_Target
             {
+                //takes the inserted texture and maps it to the object
                 fixed4 col = tex2D(_MainTexture, i.uv);
 
                 return col;

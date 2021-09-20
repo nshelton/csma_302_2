@@ -79,15 +79,19 @@ Shader "Unlit/BRDF"
             fixed4 frag(v2f i) : SV_Target
             {
                 float3 worldNormal = worldNormalFromMap(i);
+                //gets the direction of light
                 float3 lightDir = _WorldSpaceLightPos0.xyz;
 
+                //gets the viewing direction 
                 float3 viewDir = _WorldSpaceCameraPos - i.worldPos;
                 viewDir = normalize(viewDir);
                 
+                //gets the angle of light on the object
                 float lightAngle = dot(lightDir, i.normal) / 2 + 0.5;
 
                 float3 n = worldNormal;
                 
+                //gets the the viewing angle of the object from the camera
                 float viewAngle = dot(n, viewDir);
                 fixed4 col = tex2D(_BRDF, float2(viewAngle, lightAngle));
                

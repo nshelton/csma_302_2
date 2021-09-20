@@ -81,6 +81,7 @@ Shader "Unlit/colWorldSpace"
                 float3 n = worldNormal;
                
                 float4 col;
+                //uses the normal position and applies it to the rgb values of col
                 col.rgb = n;
 
                 return col;
