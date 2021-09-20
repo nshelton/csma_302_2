@@ -1,4 +1,4 @@
-Shader "Unlit/displace"
+Shader "Unlit/clip"
 {
     Properties
     {
@@ -14,6 +14,7 @@ Shader "Unlit/displace"
     {
         Tags { "RenderType"="Opaque" }
         LOD 100
+            Cull Off
 
         Pass
         {
@@ -103,6 +104,9 @@ Shader "Unlit/displace"
 
             fixed4 frag(v2f i) : SV_Target
             {
+
+                clip(sin(i.worldPos.y * 10));
+
                 float3 worldNormal = worldNormalFromMap(i);
 
                 float3 lightDir = _WorldSpaceCameraPos - i.worldPos;
@@ -212,6 +216,8 @@ Shader "Unlit/displace"
 
         fixed4 frag(v2f i) : SV_Target
         {
+            clip(sin(i.worldPos.y * 10));
+
             float3 worldNormal = worldNormalFromMap(i);
 
             float3 lightDir = _WorldSpaceCameraPos - i.worldPos;

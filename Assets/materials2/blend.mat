@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: displace
-  m_Shader: {fileID: 4800000, guid: f4729ead373cc354289177e330919a90, type: 3}
+  m_Name: blend
+  m_Shader: {fileID: 4800000, guid: 254215313f3a4174aafcb96122bd8efc, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 4000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -32,10 +32,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _disortion: -0.09
-    - _distortionOffset: 0.9
-    - _frequency: 0.51
-    - _speed: -0.03
+    - _Brightness: 3.71
+    - _brightness: 0.68
+    - _disortion: 0.09
+    - _frequency: -0.7
     m_Colors:
     - _color: {r: 0.37525412, g: 1, b: 0.07075471, a: 1}
   m_BuildTextureStacks: []
