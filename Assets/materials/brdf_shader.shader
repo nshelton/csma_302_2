@@ -93,7 +93,6 @@ Shader "Unlit/brdf_shader"
 
                 float view_angle = saturate(dot(view_direction, world_normal));
 
-                // I assume we scale this and not view angle because no surface is flat, thus it's an estimated roughness factor for light hitting the surface
                 float light_angle = dot(light_direction, world_normal) / 2 + 0.5;   // [-1, 0, 1] > [-0.5, 0, 0.5] > [0, 1]
 
                 fixed4 col = tex2D(_BRDF, float2(view_angle, light_angle));
