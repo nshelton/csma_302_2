@@ -20,7 +20,7 @@ public class materialSwitcher : MonoBehaviour
 
     void Start()
     {
-        // each of these are public materials so just drag and drop them into a material and click play in the scene
+        // each of these are public materials so just drag and drop them into a material(unless you open the SampleScene then it should be done for you) and click play in the scene
         materials[0] = diffuse;
         materials[1] = normal;
         materials[2] = lambert;
