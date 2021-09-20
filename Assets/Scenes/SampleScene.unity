@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 784b84dd6a0769c46a0f45fde2e9a237, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -216,6 +216,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &897989030 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: bdf55a24d241ac04b8df2af3623f3063, type: 3}
+  m_PrefabInstance: {fileID: 1923147315}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +232,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -292,13 +298,47 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: 7.33, y: 5.26, z: 6.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5108ad4ec2fe6049ab6a4e4901b6f19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materials:
+  - {fileID: 2100000, guid: 1a76b8a5534b32d4d81ae79746074874, type: 2}
+  - {fileID: 2100000, guid: e20c031c5281bcc488424089c089b11e, type: 2}
+  - {fileID: 2100000, guid: 6c633b099c595964d8fa8c6668bd613a, type: 2}
+  - {fileID: 2100000, guid: 25d480a4713bcaf46a78e5d2d0a9c111, type: 2}
+  - {fileID: 2100000, guid: 67596835ce20cd245ab3111f0f6c2d95, type: 2}
+  - {fileID: 2100000, guid: 629c53e90dfb35a44ba4b6d7b938e5b9, type: 2}
+  - {fileID: 2100000, guid: 35a212a724bdcd748bf3b282c63fd153, type: 2}
+  - {fileID: 2100000, guid: a16ec0a99e8ba0f41b1d370d2893622f, type: 2}
+  - {fileID: 2100000, guid: fe8711ba0494e9142bc8e325e70dd7c3, type: 2}
+  - {fileID: 2100000, guid: 469ed84982510fd4ca744667b9fe3273, type: 2}
+  model: {fileID: 897989030}
+  diffuse: {fileID: 2100000, guid: 1a76b8a5534b32d4d81ae79746074874, type: 2}
+  normal: {fileID: 2100000, guid: e20c031c5281bcc488424089c089b11e, type: 2}
+  lambert: {fileID: 2100000, guid: 6c633b099c595964d8fa8c6668bd613a, type: 2}
+  normalMap: {fileID: 2100000, guid: 25d480a4713bcaf46a78e5d2d0a9c111, type: 2}
+  phong: {fileID: 2100000, guid: 67596835ce20cd245ab3111f0f6c2d95, type: 2}
+  matcap: {fileID: 2100000, guid: 629c53e90dfb35a44ba4b6d7b938e5b9, type: 2}
+  brdf: {fileID: 2100000, guid: 35a212a724bdcd748bf3b282c63fd153, type: 2}
+  reflection: {fileID: 2100000, guid: a16ec0a99e8ba0f41b1d370d2893622f, type: 2}
+  occulsion: {fileID: 2100000, guid: fe8711ba0494e9142bc8e325e70dd7c3, type: 2}
+  normalColor: {fileID: 2100000, guid: 469ed84982510fd4ca744667b9fe3273, type: 2}
 --- !u!1001 &1923147315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -361,6 +401,6 @@ PrefabInstance:
     - target: {fileID: 2300000, guid: bdf55a24d241ac04b8df2af3623f3063, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 35a212a724bdcd748bf3b282c63fd153, type: 2}
+      objectReference: {fileID: 2100000, guid: 469ed84982510fd4ca744667b9fe3273, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bdf55a24d241ac04b8df2af3623f3063, type: 3}
