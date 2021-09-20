@@ -4,7 +4,7 @@ Shader "Unlit/displace"
     {
         _NormalMap("normal map", 2D) = "blue" {}
         _DiffuseMap("Diffuse Map", 2D) = "white" {}
-         _disortion("ditortion", float) = 0
+         _distortion("distortion", float) = 0
          _frequency ("frequency", float) = 0
     }
     SubShader
@@ -43,7 +43,7 @@ Shader "Unlit/displace"
 
             };
 
-            float  _disortion;
+            float  _distortion;
             float  _frequency;
 
             v2f vert (appdata v)
@@ -51,11 +51,9 @@ Shader "Unlit/displace"
                 v2f o;
 
 
-                float4 displacement = _disortion * float4(v.normal, 0) * (SimplexNoise(v.vertex.xyz * _frequency + _Time.y) * 0.5 + 0.5);
+                float4 displacement = _distortion * float4(v.normal, 0) * (SimplexNoise(v.vertex.xyz * _frequency + _Time.y) * 0.5 + 0.5);
 
                 o.vertex = UnityObjectToClipPos(v.vertex + displacement);
-
-
 
                 o.normal = mul(unity_ObjectToWorld, float4(v.normal, 0));
                 o.normal = normalize(o.normal);
@@ -86,7 +84,6 @@ Shader "Unlit/displace"
                 return mul(TBN_matrix, normal);
             }
 
-
             fixed4 frag(v2f i) : SV_Target
             {
                 float3 worldNormal = worldNormalFromMap(i);
@@ -99,7 +96,6 @@ Shader "Unlit/displace"
                 float brightness = dot(n, lightDir);
                 fixed4 col = brightness * tex2D(_DiffuseMap, i.uv);
                
-
                 return col;
             }
             ENDCG
