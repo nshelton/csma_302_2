@@ -20,6 +20,7 @@ public class materialSwitcher : MonoBehaviour
 
     void Start()
     {
+        // each of these are public materials so just drag and drop them into a material and click play in the scene
         materials[0] = diffuse;
         materials[1] = normal;
         materials[2] = lambert;
@@ -34,7 +35,8 @@ public class materialSwitcher : MonoBehaviour
     }
 
     void Update()
-    {
+    {   
+        // This code will switch the current material of the object to a new one by either pushing the number keys on the keyboard or the number keys in the keypad (values from 0-9)
 
         if (Input.GetKeyDown(KeyCode.Keypad0) || (Input.GetKeyDown(KeyCode.Alpha0)))
         {
