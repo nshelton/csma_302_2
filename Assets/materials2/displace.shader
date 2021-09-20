@@ -1,9 +1,11 @@
-Shader "Unlit/normalMap"
+Shader "Unlit/displace"
 {
     Properties
     {
-        _color("color", Color) = (.25, .5, .5, 1)
         _NormalMap("normal map", 2D) = "blue" {}
+        _DiffuseMap("Diffuse Map", 2D) = "white" {}
+         _disortion("ditortion", float) = 0
+         _frequency ("frequency", float) = 0
     }
     SubShader
     {
@@ -17,6 +19,7 @@ Shader "Unlit/normalMap"
             #pragma fragment frag
 
             #include "UnityCG.cginc"
+            #include "Packages/jp.keijiro.noiseshader/Shader/SimplexNoise3D.hlsl"
 
             struct appdata
             {
@@ -40,10 +43,20 @@ Shader "Unlit/normalMap"
 
             };
 
+            float  _disortion;
+            float  _frequency;
+
             v2f vert (appdata v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
+
+
+                float4 displacement = _disortion * float4(v.normal, 0) * (SimplexNoise(v.vertex.xyz * _frequency + _Time.y) * 0.5 + 0.5);
+
+                o.vertex = UnityObjectToClipPos(v.vertex + displacement);
+
+
+
                 o.normal = mul(unity_ObjectToWorld, float4(v.normal, 0));
                 o.normal = normalize(o.normal);
 
@@ -58,8 +71,8 @@ Shader "Unlit/normalMap"
                 return o;
             }
 
-            float4 _color;
             sampler2D _NormalMap;
+            sampler2D _DiffuseMap;
 
             float3 worldNormalFromMap(v2f i)
             {
@@ -84,7 +97,7 @@ Shader "Unlit/normalMap"
                 float3 n = worldNormal;
                 
                 float brightness = dot(n, lightDir);
-                fixed4 col = brightness * _color;
+                fixed4 col = brightness * tex2D(_DiffuseMap, i.uv);
                
 
                 return col;
