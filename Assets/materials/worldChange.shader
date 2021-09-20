@@ -102,7 +102,7 @@ Shader "Unlit/brdf_shader"
 
                 float dist = distance(_WorldSpaceCameraPos, float4(0.0, 0.0, 0.0, 0.1));
 
-                if(dist < 20.0){
+                if(dist < 5.0){
                     return tex2D(_BRDF, float2(view_angle, light_angle));
                 }else{
                     return tex2D(_BRDF2, float2(view_angle, light_angle));
