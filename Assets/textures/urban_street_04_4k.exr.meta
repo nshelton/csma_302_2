@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 7579ab6c285460c4f90cd3feddc4f883
+=======
+guid: 181bccde0e378974f8e1d901dfe74501
+>>>>>>> main
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -53,7 +57,11 @@ TextureImporter:
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
   textureType: 0
+<<<<<<< HEAD
   textureShape: 1
+=======
+  textureShape: 2
+>>>>>>> main
   singleChannelComponent: 0
   flipbookRows: 1
   flipbookColumns: 1
@@ -87,6 +95,7 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+<<<<<<< HEAD
   - serializedVersion: 3
     buildTarget: iPhone
     maxTextureSize: 2048
@@ -111,6 +120,8 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+=======
+>>>>>>> main
   spriteSheet:
     serializedVersion: 2
     sprites: []

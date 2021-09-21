@@ -8,16 +8,24 @@ Feel free to replace the model with something else, or use the samples.
 
 The shaders should be “unlit” because we are going to implement the lighting models ourselves, manually. 
 
-1. Basic diffuse color
-2. Basic normal shading
-3. Basic diffuse Lambert shading ( using 1 directional light) 
-4. Diffuse map + Phong
-5. Diffuse map + normal map + Phong
-6. Reflective (Chrome) material with environment map
-7. Occlusion (detail) texture 
-8. Normal extrusion 
-9. animated vertex distortion
-10. cutout 
+l - light vector
+n - normal vector
+v - view direction
+
+1. Basic diffuse color 
+2. Basic normal shading `dot(n, v)`
+3. Basic diffuse Lambert shading  `dot(n, l)`
+4. Normal map material (using tangent space normals) 
+5. Phong shading `dot(n, l) * _color + _ambient + specular`
+6. matcap (from class)
+7. brdf (from class)
+8. Reflection of environment map (use .exr in the texture folder) 
+9. basic texture map (use occlusion texture as color)
+10. color based on normal or world space coordinate (get creative)
+
+*User interface:* the number keys should cycle through the materials 0-9. I shouldn't have to drag materials into the scene. Modify `materialSwitcher.cs` to handle 10 materials.
+
+*note*: you don't have to use the gutenberg model, look around for your favorite, or even find a model online what has a normal map if you want. 
 
 ## Due Date
 
@@ -40,6 +48,7 @@ Unity shaders:
  - https://docs.unity3d.com/Manual/SL-SurfaceShaderExamples.html
 
  - https://catlikecoding.com/unity/tutorials/rendering/
+ 
  - https://catlikecoding.com/unity/tutorials/rendering/part-2/
 
 
@@ -47,7 +56,7 @@ Unity shaders:
 
 8 points per effect implemented (up to 10)
 
-10 points for project organization ( top-level folders),  short README describing the effects and how the UI works.
+10 points for project organization ( top-level folders), and do the number keys change through 10 materials? 
 
 10 points for code organization (indentation, comments, descriptive variable names, creating functions for each effect)
 
