@@ -1,60 +1,53 @@
 
-WU Fall 2021 | CSMA 302 | Lab #2
+WU Fall 2021 | CSMA 302 | Lab #2.5
 ---
-# Basic Materials Shaders
-For this assignment you will make 10 materials in unity, and they should switch with the number keys. 
+# Advanced Materials Shaders
+For this assignment you will make 6 materials in unity, and they should switch with the number keys. 
 
 Feel free to replace the model with something else, or use the samples.
 
 The shaders should be “unlit” because we are going to implement the lighting models ourselves, manually. 
 
-l - light vector
-n - normal vector
-v - view direction
+1. Blend mode : A material that uses a non-standard blend mode. You could do additive, and turn off backface culling, and turn off ZWrite. 
+2. Clip : a shader that does some clipping of the model to cutout. This should also disable backface culling so that you can see through the holes.
+3. Displacement : This shader should do some vertex animation in the vertex shader.
+4. Displacement with reflection: do a vertex displacement, but also compute the proper normal vector to do accurate reflections in the fragment shader
+5. Hologram shader: This should create a cool-looking hologram effect using several techniques:
+     - vertex displacement
+     - additive blending
+     - world space brightness stripes
+     - diffuse map
+     - overall color tint
+6. Create your own shader: Get creative, use some of the effects we have worked on previously. It should have three features and you should be able to explain what they do in the comments. 
 
-1. Basic diffuse color 
-2. Basic normal shading `dot(n, v)`
-3. Basic diffuse Lambert shading  `dot(n, l)`
-4. Normal map material (using tangent space normals) 
-5. Phong shading `dot(n, l) * _color + _ambient + specular`
-6. matcap (from class)
-7. brdf (from class)
-8. Reflection of environment map (use .exr in the texture folder) 
-9. basic texture map (use occlusion texture as color)
-10. color based on normal or world space coordinate (get creative)
 
-*User interface:* the number keys should cycle through the materials 0-9. I shouldn't have to drag materials into the scene. Modify `materialSwitcher.cs` to handle 10 materials.
+*ALL SHADERS MUST* : 
+ - have an accurate reflection pass (that mirrors the vertex shader distortion, or clipping you do in the fragment shader)
+ - support a diffuse map
+ - have some sort of lighting (`dot(n, l)` or `dot(n, v)`)
 
-*note*: you don't have to use the gutenberg model, look around for your favorite, or even find a model online what has a normal map if you want. 
 
+*User interface:* the number keys should cycle through the materials 0-6. I shouldn't have to drag materials into the scene. Modify `materialSwitcher.cs` to handle 6 materials.
+
+
+ 
 ## Due Date
 
-**The assignment is due on Sunday September 19th before midnight.**
+**The assignment is due on Sunday September 26th before midnight.**
 
 ## Resources
 
-linear algebra / theory: 
 
- - https://acko.net/tv/webglmath/
-
-Lighitng models: 
-
- - https://en.wikipedia.org/wiki/Lambertian_reflectance
-
- - https://en.wikipedia.org/wiki/Phong_reflection_model
- 
-Unity shaders: 
-
- - https://docs.unity3d.com/Manual/SL-SurfaceShaderExamples.html
-
- - https://catlikecoding.com/unity/tutorials/rendering/
- 
- - https://catlikecoding.com/unity/tutorials/rendering/part-2/
-
+Blending : https://docs.unity3d.com/Manual/SL-Blend.html
+Shaderlab : https://docs.unity3d.com/2017.2/Documentation/Manual/SL-Shader.html
+Examples :  https://docs.unity3d.com/2017.2/Documentation/Manual/SL-VertexFragmentShaderExamples.html
+Shaderlab Commands: https://docs.unity3d.com/Manual/shader-shaderlab-commands.html
 
 ## Grading
 
-8 points per effect implemented (up to 10)
+10 points each for each shader 1,2,3,4
+
+20 points each for shaders 5 and 6
 
 10 points for project organization ( top-level folders), and do the number keys change through 10 materials? 
 
