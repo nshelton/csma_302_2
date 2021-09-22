@@ -6,7 +6,7 @@ Shader "Unlit/Hologram"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _color("color", Color) = (1, 0, 0, 1)
-        _Bias("Bias", Float) = 0.6
+        _Width("Width", Float) = 0.6
         _Frequency("Frequency", Float) = 1000
         _Speed("Speed", Float) = -500
     }
@@ -45,7 +45,7 @@ Shader "Unlit/Hologram"
             sampler2D _MainTex;
             float4 _MainTex_ST;
             fixed4 _color;
-            float _Bias;
+            float _Width;
             float _Frequency;
             float _Speed;
 
@@ -64,9 +64,9 @@ Shader "Unlit/Hologram"
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
                 // hit play in the scene view to see the hologram animated
-                col =  _color * max(0, cos(i.obj_vertex.y * _Frequency + _Time.x * _Speed) + _Bias);
-                col *=  1 - max(0, cos(i.obj_vertex.x * _Frequency + _Time.x * _Speed) + _Bias);
-                col *=  1 - max(0, cos(i.obj_vertex.z * _Frequency + _Time.x * _Speed) + _Bias);
+                col =  _color * max(0, sin(i.obj_vertex.y * _Frequency + _Time.x * _Speed) + _Width);
+                col *=  1 - max(0, sin(i.obj_vertex.x * _Frequency + _Time.x * _Speed) + _Width);
+                col *=  1 - max(0, sin(i.obj_vertex.z * _Frequency + _Time.x * _Speed) + _Width);
 
                 return col;
             }
