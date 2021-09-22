@@ -9,6 +9,8 @@ Shader "Unlit/Hologram"
         _Width("Width", Float) = 0.6
         _Frequency("Frequency", Float) = 1000
         _Speed("Speed", Float) = -500
+        _distortionFrequency("distortionFrequency", Float) = 0
+        _distortionAmount("distortionAmount", Float) = 0
     }
     SubShader
     {
@@ -48,12 +50,23 @@ Shader "Unlit/Hologram"
             float _Width;
             float _Frequency;
             float _Speed;
+            float _distortionFrequency;
+            float _distortionAmount;
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.obj_vertex = mul(unity_ObjectToWorld, v.vertex);
-                o.vertex = UnityObjectToClipPos(v.vertex);
+
+                float4 displacement = float4 (
+                    _distortionAmount * sin(_distortionFrequency * v.vertex.y + _Time.x * _Speed),
+                     0, 0, 0);
+
+                displacement += float4 (
+                    _distortionAmount/2 * sin(_distortionFrequency*2 * v.vertex.y + _Time.x * _Speed),
+                     0, 0, 0);
+
+                o.vertex = UnityObjectToClipPos(v.vertex + displacement);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
