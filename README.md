@@ -4,6 +4,8 @@ WU Fall 2021 | CSMA 302 | Lab #2.5
 # Advanced Materials Shaders
 For this assignment you will make 6 materials in unity, and they should switch with the number keys. 
 
+make a new scene that is different from the first part of the assignment.
+
 Feel free to replace the model with something else, or use the samples.
 
 The shaders should be “unlit” because we are going to implement the lighting models ourselves, manually. 
@@ -22,7 +24,7 @@ The shaders should be “unlit” because we are going to implement the lighting
 
 
 *ALL SHADERS MUST* : 
- - have an accurate reflection pass (that mirrors the vertex shader distortion, or clipping you do in the fragment shader)
+ - have an accurate shadow pass (that mirrors the vertex shader distortion, or clipping you do in the fragment shader)
  - support a diffuse map
  - have some sort of lighting (`dot(n, l)` or `dot(n, v)`)
 
