@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: hologram
-  m_Shader: {fileID: 4800000, guid: f4729ead373cc354289177e330919a90, type: 3}
+  m_Shader: {fileID: 4800000, guid: 096895efb3046d84587a916d5897917c, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -32,10 +32,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _disortion: -0.09
+    - _disortion: 0.21
     - _distortionOffset: 0.9
-    - _frequency: 0.51
-    - _speed: -0.03
+    - _frequency: 0.45
+    - _speed: 0.15
     m_Colors:
-    - _color: {r: 0.37525412, g: 1, b: 0.07075471, a: 1}
+    - _color: {r: 0.15315263, g: 0.3584906, b: 0.05242079, a: 1}
   m_BuildTextureStacks: []

@@ -58,6 +58,7 @@ Shader "Unlit/clip"
             float  _frequency;
             float  _speed;
             float _distortionOffset;
+            float4 _color;
 
             float4 distortion(float3 p) {
                 // different type of displacement along normal
@@ -123,6 +124,8 @@ Shader "Unlit/clip"
                 
                 float brightness = dot(n, lightDir);
                 fixed4 col = brightness * tex2D(_DiffuseMap, i.uv);
+
+                col.rgb = _color;
                
 
                 return col;
