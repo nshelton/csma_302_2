@@ -285,7 +285,7 @@ PrefabInstance:
     - target: {fileID: -2943923492859624634, guid: 8560b1d80feed8f41a41d9fd35226f4f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: bf45654214a865749bbbaf5ff6a08240, type: 2}
+      objectReference: {fileID: 2100000, guid: 307012af512b3a54b8bd460f580695f4, type: 2}
     - target: {fileID: 919132149155446097, guid: 8560b1d80feed8f41a41d9fd35226f4f, type: 3}
       propertyPath: m_Name
       value: Ch19_nonPBR@Walking
@@ -665,7 +665,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1714105210
 BoxCollider:
   m_ObjectHideFlags: 0
