@@ -351,10 +351,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   materials:
+  - {fileID: 2100000, guid: 5b8930ccd17edab4b88c7caab24216c4, type: 2}
   - {fileID: 2100000, guid: 0215bfc7071fc09488582fd11072103e, type: 2}
   - {fileID: 2100000, guid: bb55d20bd2b172441b6752143445b93a, type: 2}
   - {fileID: 2100000, guid: 946dff061a681d042b7f555578a83f17, type: 2}
-  - {fileID: 2100000, guid: 13a1374cf219fe64c9f51d5cc08acabf, type: 2}
+  - {fileID: 2100000, guid: c2c3601b02a000c44839f254fd4e631d, type: 2}
   - {fileID: 2100000, guid: 13a1374cf219fe64c9f51d5cc08acabf, type: 2}
   - {fileID: 2100000, guid: 61509d005501c3c4fb491f6dd94d4664, type: 2}
   topBaseTex: {fileID: 2800000, guid: 6ca992d4624465044a18403ed65258c1, type: 3}
