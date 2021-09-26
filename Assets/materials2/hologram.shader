@@ -1,4 +1,4 @@
-Shader "Unlit/clip"
+Shader "Unlit/hologram"
 {
     Properties
     {
@@ -7,6 +7,7 @@ Shader "Unlit/clip"
         _DiffuseMap("Diffuse Map", 2D) = "white" {}
         _disortion("ditortion", float) = 0
         _frequency ("frequency", float) = 0
+        _lineFrequency ("line frequency", float) = 0
         _speed("speed", float) = 0
         _distortionOffset("distortionOffset", float) = 0
             
@@ -21,7 +22,7 @@ Shader "Unlit/clip"
         // disable blackface bulling
         Cull Off
         // don't write to the depth buffer
-        ZWrite Off
+        //ZWrite Off
 
         Pass
         {
@@ -54,21 +55,20 @@ Shader "Unlit/clip"
 
             };
 
-            float  _disortion;
-            float  _frequency;
-            float  _speed;
+            float _disortion;
+            float _frequency;
+            float _lineFrequency;
+            float _speed;
             float _distortionOffset;
             float4 _color;
 
             float4 distortion(float3 p) {
-                // different type of displacement along normal
-                //   float4 displacement = _disortion * float4(v.normal, 0) * 
-                //       (SimplexNoise(v.vertex.xyz * _frequency + _Time.y) * 0.5 + 0.5);
 
-                return saturate(p.y - _distortionOffset) * _disortion * float4(
+                return _disortion * float4(
+                    //applies a dsitortion accross the x-axis
                     SimplexNoise(p * _frequency + _Time.y * _speed),
-                    SimplexNoise(p * _frequency + _Time.y * _speed + 131.678),
-                    SimplexNoise(p * _frequency + _Time.y * _speed + 272.874),
+                    0, 
+                    0,
                     0);
             }
 
@@ -78,7 +78,6 @@ Shader "Unlit/clip"
 
                 float4 displacement = distortion(v.vertex.xyz);
                 o.vertex = UnityObjectToClipPos(v.vertex + displacement);
-
 
                 o.normal = mul(unity_ObjectToWorld, float4(v.normal, 0));
                 o.normal = normalize(o.normal);
@@ -113,7 +112,7 @@ Shader "Unlit/clip"
             fixed4 frag(v2f i) : SV_Target
             {
 
-                clip(sin(i.worldPos.y * 10));
+                clip(sin(i.worldPos.y * _lineFrequency));
 
                 float3 worldNormal = worldNormalFromMap(i);
 
@@ -125,9 +124,9 @@ Shader "Unlit/clip"
                 float brightness = dot(n, lightDir);
                 fixed4 col = brightness * tex2D(_DiffuseMap, i.uv);
 
-                col.rgb = _color;
+                //applies a color tint to the model
+                col.rgb *= _color;
                
-
                 return col;
             }
             ENDCG
@@ -169,21 +168,19 @@ Shader "Unlit/clip"
 
         };
 
-        float  _disortion;
-        float  _frequency;
-        float  _speed;
+        float _disortion;
+        float _frequency;
+        float _lineFrequency;
+        float _speed;
         float _distortionOffset;
-
+        float4 _color;
 
         float4 distortion(float3 p) {
-            // different type of displacement along normal
-            //   float4 displacement = _disortion * float4(v.normal, 0) * 
-            //       (SimplexNoise(v.vertex.xyz * _frequency + _Time.y) * 0.5 + 0.5);
 
             return  saturate(p.y - _distortionOffset) * _disortion * float4(
                 SimplexNoise(p * _frequency + _Time.y * _speed),
-                SimplexNoise(p * _frequency + _Time.y * _speed + 131.678),
-                SimplexNoise(p * _frequency + _Time.y * _speed + 272.874),
+                0,
+                0,
                 0);
         }
 
@@ -226,7 +223,7 @@ Shader "Unlit/clip"
 
         fixed4 frag(v2f i) : SV_Target
         {
-            clip(sin(i.worldPos.y * 10));
+            clip(sin(i.worldPos.y * _lineFrequency));
 
             float3 worldNormal = worldNormalFromMap(i);
 
@@ -237,7 +234,6 @@ Shader "Unlit/clip"
 
             float brightness = dot(n, lightDir);
             fixed4 col = brightness * tex2D(_DiffuseMap, i.uv);
-
 
             return col;
         }

@@ -1,13 +1,15 @@
-Shader "Unlit/displace_reflection"
+Shader "Unlit/customShader"
 {
     Properties
     {
+        _color("color tint", Color) = (.25, .25, .25, 1)
+        _brightness("brightness", Range(0,1)) = 1
         _NormalMap("normal map", 2D) = "blue" {}
         _DiffuseMap("Diffuse Map", 2D) = "white" {}
-        _EnvironmentMap("Environment Map", CUBE) = "white" {}
-         _disortion("ditortion", float) = 0
-         _frequency("frequency", float) = 0
-         _speed("speed", float) = 0
+        _disortion("distortion", Range(-0.5, 0.5)) = 1
+        _frequency ("frequency", float) = 0
+        _speed("speed", float) = 0
+            
     }
     SubShader
     {
@@ -48,14 +50,16 @@ Shader "Unlit/displace_reflection"
             float  _disortion;
             float  _frequency;
             float  _speed;
-
+            float _distortionOffset = 3.10;
+            float _brightness;
+            float3 _color;
 
             float4 distortion(float3 p) {
                 // different type of displacement along normal
                 //   float4 displacement = _disortion * float4(v.normal, 0) * 
                 //       (SimplexNoise(v.vertex.xyz * _frequency + _Time.y) * 0.5 + 0.5);
 
-                return  _disortion * float4(
+                return saturate(p.y - _distortionOffset) * _disortion * float4(
                     SimplexNoise(p * _frequency + _Time.y * _speed),
                     SimplexNoise(p * _frequency + _Time.y * _speed + 131.678),
                     SimplexNoise(p * _frequency + _Time.y * _speed + 272.874),
@@ -66,18 +70,11 @@ Shader "Unlit/displace_reflection"
             {
                 v2f o;
 
-
-
                 float4 displacement = distortion(v.vertex.xyz);
-                float4 newPoint = v.vertex + displacement;
-                o.vertex = UnityObjectToClipPos(newPoint);
+                o.vertex = UnityObjectToClipPos(v.vertex + displacement);
 
-                float3 normal = v.normal;
-                float3 offset = v.vertex.xyz + normal * 0.001;
-                offset += distortion(offset);
-                normal = normalize( offset - newPoint);
 
-                o.normal = mul(unity_ObjectToWorld, float4(normal, 0));
+                o.normal = mul(unity_ObjectToWorld, float4(v.normal, 0));
                 o.normal = normalize(o.normal);
 
                 o.tangent.xyz = mul(unity_ObjectToWorld, float4(v.tangent.xyz, 0));
@@ -93,7 +90,6 @@ Shader "Unlit/displace_reflection"
 
             sampler2D _NormalMap;
             sampler2D _DiffuseMap;
-            samplerCUBE _EnvironmentMap;
 
             float3 worldNormalFromMap(v2f i)
             {
@@ -112,15 +108,18 @@ Shader "Unlit/displace_reflection"
             {
                 float3 worldNormal = worldNormalFromMap(i);
 
-                float3 viewDir = _WorldSpaceCameraPos - i.worldPos;
-                viewDir = normalize(viewDir);
+                float3 lightDir = _WorldSpaceCameraPos - i.worldPos;
+                lightDir = normalize(lightDir);
 
                 float3 n = worldNormal;
                 
-                //fixed4 col = brightness * tex2D(_DiffuseMap, i.uv);
-                float3 reflection = reflect(n, viewDir);
-                fixed4 col = texCUBE(_EnvironmentMap, reflection);
-                //col.rgb = n * 0.5 + 0.5;
+                float brightness = dot(n, lightDir);
+                fixed4 col = brightness * tex2D(_DiffuseMap, i.uv);
+
+                col.rgb *= _color;
+                col.rgba *= _brightness;
+               
+
                 return col;
             }
             ENDCG
@@ -162,17 +161,19 @@ Shader "Unlit/displace_reflection"
 
         };
 
-        float  _disortion;
+            float  _disortion;
             float  _frequency;
             float  _speed;
-
+            float _distortionOffset = 3.10;
+            float _brightness;
+            float3 _color;
 
             float4 distortion(float3 p) {
                 // different type of displacement along normal
                 //   float4 displacement = _disortion * float4(v.normal, 0) * 
                 //       (SimplexNoise(v.vertex.xyz * _frequency + _Time.y) * 0.5 + 0.5);
 
-                return  _disortion * float4(
+                return saturate(p.y - _distortionOffset) * _disortion * float4(
                     SimplexNoise(p * _frequency + _Time.y * _speed),
                     SimplexNoise(p * _frequency + _Time.y * _speed + 131.678),
                     SimplexNoise(p * _frequency + _Time.y * _speed + 272.874),
@@ -183,18 +184,11 @@ Shader "Unlit/displace_reflection"
             {
                 v2f o;
 
-
-
                 float4 displacement = distortion(v.vertex.xyz);
-                float4 newPoint = v.vertex + displacement;
-                o.vertex = UnityObjectToClipPos(newPoint);
+                o.vertex = UnityObjectToClipPos(v.vertex + displacement);
 
-                float3 normal = v.normal;
-                float3 offset = v.vertex.xyz + normal * 0.001;
-                offset += distortion(offset);
-                normal = normalize( offset - newPoint);
 
-                o.normal = mul(unity_ObjectToWorld, float4(normal, 0));
+                o.normal = mul(unity_ObjectToWorld, float4(v.normal, 0));
                 o.normal = normalize(o.normal);
 
                 o.tangent.xyz = mul(unity_ObjectToWorld, float4(v.tangent.xyz, 0));
@@ -210,7 +204,6 @@ Shader "Unlit/displace_reflection"
 
             sampler2D _NormalMap;
             sampler2D _DiffuseMap;
-            samplerCUBE _EnvironmentMap;
 
             float3 worldNormalFromMap(v2f i)
             {
@@ -229,15 +222,18 @@ Shader "Unlit/displace_reflection"
             {
                 float3 worldNormal = worldNormalFromMap(i);
 
-                float3 viewDir = _WorldSpaceCameraPos - i.worldPos;
-                viewDir = normalize(viewDir);
+                float3 lightDir = _WorldSpaceCameraPos - i.worldPos;
+                lightDir = normalize(lightDir);
 
                 float3 n = worldNormal;
                 
-                //fixed4 col = brightness * tex2D(_DiffuseMap, i.uv);
-                float3 reflection = reflect(n, viewDir);
-                fixed4 col = texCUBE(_EnvironmentMap, reflection);
-                //col.rgb = n * 0.5 + 0.5;
+                float brightness = dot(n, lightDir);
+                fixed4 col = brightness * tex2D(_DiffuseMap, i.uv);
+
+                col.rgb *= _color;
+                col.rgba *= _brightness;
+               
+
                 return col;
         }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class materialSwitcher : MonoBehaviour
+public class materialSwitcher2 : MonoBehaviour
 {
 
     [SerializeField]
@@ -44,25 +44,6 @@ public class materialSwitcher : MonoBehaviour
             _renderer.material = _materials[5];
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha7)) 
-        {
-            _renderer.material = _materials[6];
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha8)) 
-        {
-            _renderer.material = _materials[7];
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha9)) 
-        {
-            _renderer.material = _materials[8];
-        }
-
-          if (Input.GetKeyDown(KeyCode.Alpha0)) 
-        {
-            _renderer.material = _materials[9];
-        }
-
+    
     }
 }

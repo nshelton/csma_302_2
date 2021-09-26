@@ -36,9 +36,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _disortion: 0.03
-    - _frequency: 3
-    - _speed: 0.09
+    - _disortion: 0.02
+    - _frequency: 4.54
+    - _speed: 11.58
     m_Colors:
     - _color: {r: 0.37525412, g: 1, b: 0.07075471, a: 1}
   m_BuildTextureStacks: []
