@@ -11,6 +11,7 @@ public class materialSwitcherProject2 : MonoBehaviour
     public Material Displace;
     public Material Displace_Reflection;
     public Material Hologram;
+    public Material HologramCustom;
 
 
 
@@ -23,6 +24,7 @@ public class materialSwitcherProject2 : MonoBehaviour
         materials[2] = Displace;
         materials[3] = Displace_Reflection;
         materials[4] = Hologram;
+        materials[5] = HologramCustom;
 
     }
 
@@ -50,7 +52,10 @@ public class materialSwitcherProject2 : MonoBehaviour
         {
             model.GetComponent<MeshRenderer>().material = materials[4];
         }
-        
+        if (Input.GetKeyDown(KeyCode.Keypad5) || (Input.GetKeyDown(KeyCode.Alpha5)))
+        {
+            model.GetComponent<MeshRenderer>().material = materials[5];
+        }
 
     }
 }

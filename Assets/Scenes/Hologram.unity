@@ -386,7 +386,7 @@ PrefabInstance:
     - target: {fileID: 2300000, guid: 2e9c70f1d4d952d468f485be07800f25, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ed28421295b48a442b29ddc54621bd53, type: 2}
+      objectReference: {fileID: 2100000, guid: dad3a00c306e7eb4ab8965b9d9858a86, type: 2}
     - target: {fileID: 9500000, guid: 2e9c70f1d4d952d468f485be07800f25, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -712,12 +712,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   model: {fileID: 338366547}
   Blend: {fileID: 2100000, guid: f62f24addc48233418147d163fa90c5e, type: 2}
   Clip: {fileID: 2100000, guid: f6986482f5520114b88f4251b01c4c9a, type: 2}
   Displace: {fileID: 2100000, guid: 01d907a6d0cb3f64aada97bc4d9c612a, type: 2}
   Displace_Reflection: {fileID: 2100000, guid: ed28421295b48a442b29ddc54621bd53, type: 2}
   Hologram: {fileID: 2100000, guid: dad3a00c306e7eb4ab8965b9d9858a86, type: 2}
+  HologramCustom: {fileID: 2100000, guid: e161c439ba83a2548a51812d3ca4cd46, type: 2}
 --- !u!4 &1541935243
 Transform:
   m_ObjectHideFlags: 0
