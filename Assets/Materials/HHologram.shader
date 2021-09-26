@@ -6,16 +6,16 @@ Shader "Unlit/HHologram"
         _NormalTex ("Normal Map", 2D) = "white" {}
         _distortionOffset ("Distortion Offset", Range (0.01, 1)) = 0.078125
         _distortion ("Distortion", Range (0.01, 1)) = 0.078125
-        _frequency ("Frequency", Range (0.01, 1)) = 0.078125
+        _frequency ("Frequency", Range (0.01, 1000)) = 0.078125
         _speed ("Speed", Range (0.01, 1)) = 0.078125
     }
     SubShader
     {
         Tags { "RenderType"="Transparent" }
         LOD 100
-                // additive blending
+        // additive blending
         Blend One One
-        // disable blackface bulling
+        // disable backface culling
         //Cull Off
         // don't write to the depth buffer
         ZWrite Off
@@ -76,10 +76,10 @@ Shader "Unlit/HHologram"
                 //   float4 displacement = _disortion * float4(v.normal, 0) * 
                 //       (SimplexNoise(v.vertex.xyz * _frequency + _Time.y) * 0.5 + 0.5);
 
-                return saturate(p.y - _distortionOffset) * _distortion * float4(
-                    SimplexNoise(p * _frequency + _Time.y * _speed * _SinTime * 120000),
-                    SimplexNoise(p * _frequency + _Time.y * _speed + 131.678),
-                    SimplexNoise(p * _frequency + _Time.y * _speed + 272.874),
+                return _distortion * float4(
+                    SimplexNoise(p * _frequency + _speed * _SinTime * 120000),
+                    0,
+                    0,
                     0);
             }
             v2f vert (appdata v)
@@ -122,8 +122,9 @@ Shader "Unlit/HHologram"
                 col.g += 0.4;
 
                 col.rgb -= SimplexNoise(i.worldPos.y * 4 + _Time.y * 2)/3;
+                col.rgb += SimplexNoise(i.worldPos * 1000) / 5;
                 //col.rgb /= normalize(SimplexNoise(i.worldPos.y * 6 + _Time.y));
-                
+                col.rgb /= 2;
                 //fixed4 col = float4(1,0,0,1);
 
                 return col;

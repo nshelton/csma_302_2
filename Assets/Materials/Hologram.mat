@@ -76,9 +76,9 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _distortion: 0.033
-    - _distortionOffset: 0.316
-    - _frequency: 0.896
+    - _distortion: 0.035
+    - _distortionOffset: 0.01
+    - _frequency: 1
     - _speed: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
