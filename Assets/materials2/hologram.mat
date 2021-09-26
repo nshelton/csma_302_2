@@ -81,8 +81,8 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     - _brightness: 0.14
-    - _distortion: 0
-    - _distortionOffset: 0
+    - _distortion: -0.94
+    - _distortionOffset: 5
     - _frequency: 0
     - _speed: 0
     m_Colors:

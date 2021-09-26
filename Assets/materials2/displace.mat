@@ -33,8 +33,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _disortion: 0.91
-    - _distortion: 0
-    - _frequency: 0
+    - _distortion: 0.19
+    - _frequency: 0.1
     m_Colors:
     - _color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

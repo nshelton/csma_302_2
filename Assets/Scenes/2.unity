@@ -285,7 +285,7 @@ PrefabInstance:
     - target: {fileID: -2943923492859624634, guid: 8560b1d80feed8f41a41d9fd35226f4f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 307012af512b3a54b8bd460f580695f4, type: 2}
+      objectReference: {fileID: 2100000, guid: 02729cd09dd720946a36e32853fad896, type: 2}
     - target: {fileID: 919132149155446097, guid: 8560b1d80feed8f41a41d9fd35226f4f, type: 3}
       propertyPath: m_Name
       value: Ch19_nonPBR@Walking
@@ -647,6 +647,31 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4a6528242b3568945a74cf1256cda81c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d9041d9fc795a945a720e51ab41fc1b, type: 3}
+--- !u!1 &1129488430 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8560b1d80feed8f41a41d9fd35226f4f, type: 3}
+  m_PrefabInstance: {fileID: 303774599}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1129488431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129488430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70fb7740d5b15f4438faccd5cfc1e768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _materials:
+  - {fileID: 2100000, guid: 02729cd09dd720946a36e32853fad896, type: 2}
+  - {fileID: 2100000, guid: bf45654214a865749bbbaf5ff6a08240, type: 2}
+  - {fileID: 2100000, guid: 29f9cf19dbf09ac4289ae297cb7b9c78, type: 2}
+  - {fileID: 2100000, guid: 4a6528242b3568945a74cf1256cda81c, type: 2}
+  - {fileID: 2100000, guid: 307012af512b3a54b8bd460f580695f4, type: 2}
+  - {fileID: 2100000, guid: 0aebb2e8684bd2045a8de03b93e032eb, type: 2}
+  _renderer: {fileID: 1973014625}
 --- !u!1 &1714105209
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,7 +690,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1714105210
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -742,3 +767,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0.006, y: -0.046, z: -0.175}
+--- !u!137 &1973014625 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -2943923492859624634, guid: 8560b1d80feed8f41a41d9fd35226f4f, type: 3}
+  m_PrefabInstance: {fileID: 303774599}
+  m_PrefabAsset: {fileID: 0}
