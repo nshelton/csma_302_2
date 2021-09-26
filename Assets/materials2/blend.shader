@@ -4,13 +4,16 @@ Shader "Unlit/blend"
     {
         _NormalMap("normal map", 2D) = "blue" {}
         _DiffuseMap("Diffuse Map", 2D) = "white" {}
-         _disortion("ditortion", float) = 0
-         _frequency("frequency", float) = 0
-         _brightness("brightness", float) = 0
+        _brightness("brightness", float) = 0
+        _color("color", Color) = (1, 0, 0, 1)
+        _Width("Width", Float) = 0.6
+        _Frequency("Frequency", Float) = 0 //you can change the frequency to see how the object will be drawn using this shader
+
+
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" }
+        Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
         LOD 100
 
         // additive blending
@@ -27,7 +30,6 @@ Shader "Unlit/blend"
             #pragma fragment frag
 
             #include "UnityCG.cginc"
-            #include "Packages/jp.keijiro.noiseshader/Shader/SimplexNoise3D.hlsl"
 
             struct appdata
             {
@@ -48,15 +50,22 @@ Shader "Unlit/blend"
                 float3 normal : NORMAL;
                 float4 tangent : TANGENT;
                 float3 worldPos : TEXCOORD1;
+                float4 obj_vertex : TEXCOORD2;
 
             };
 
-            float  _disortion;
-            float  _frequency;
+            sampler2D _DiffuseMap;
+            sampler2D _NormalMap;
+            float4 _DiffuseMap_ST;
+            fixed4 _color;
+            float _Width;
+            float _brightness;
+            float  _Frequency;
 
             v2f vert (appdata v)
             {
                 v2f o;
+                o.obj_vertex = mul(unity_ObjectToWorld, v.vertex);
 
                 o.vertex = UnityObjectToClipPos(v.vertex);
 
@@ -74,9 +83,6 @@ Shader "Unlit/blend"
                 return o;
             }
 
-            sampler2D _NormalMap;
-            sampler2D _DiffuseMap;
-            float _brightness;
 
             float3 worldNormalFromMap(v2f i)
             {
@@ -91,7 +97,7 @@ Shader "Unlit/blend"
             }
 
 
-            fixed4 frag(v2f i) : SV_Target
+             fixed4 frag(v2f i) : SV_Target
             {
                 float3 worldNormal = worldNormalFromMap(i);
 
@@ -99,9 +105,14 @@ Shader "Unlit/blend"
                 lightDir = normalize(lightDir);
 
                 float3 n = worldNormal;
-                 
+                float brightness = dot(n, lightDir);
+
                 fixed4 col = tex2D(_DiffuseMap, i.uv);
-                col *= _brightness;
+
+                col =  _color * max(0, sin(i.obj_vertex.y * _Frequency) + _Width);
+                col *=  1 - max(0, sin(i.obj_vertex.x * _Frequency) + _Width);
+                col *=  1 - max(0, sin(i.obj_vertex.z * _Frequency) + _Width);
+
 
                 return col;
             }

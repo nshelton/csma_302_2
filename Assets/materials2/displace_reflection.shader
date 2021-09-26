@@ -2,12 +2,13 @@ Shader "Unlit/displace_reflection"
 {
     Properties
     {
+        _color("color", Color) = (.25, .5, .5, 1)
         _NormalMap("normal map", 2D) = "blue" {}
         _DiffuseMap("Diffuse Map", 2D) = "white" {}
-        _EnvironmentMap("Environment Map", CUBE) = "white" {}
-         _disortion("ditortion", float) = 0
-         _frequency("frequency", float) = 0
-         _speed("speed", float) = 0
+        _EnvironmentMap("Environment Map", 2D) = "white" {}
+        _disortion("ditortion", float) = 0
+        _frequency("frequency", float) = 0
+        _speed("speed", float) = 0
     }
     SubShader
     {
@@ -21,7 +22,6 @@ Shader "Unlit/displace_reflection"
             #pragma fragment frag
 
             #include "UnityCG.cginc"
-            #include "Packages/jp.keijiro.noiseshader/Shader/SimplexNoise3D.hlsl"
 
             struct appdata
             {
@@ -45,39 +45,12 @@ Shader "Unlit/displace_reflection"
 
             };
 
-            float  _disortion;
-            float  _frequency;
-            float  _speed;
-
-
-            float4 distortion(float3 p) {
-                // different type of displacement along normal
-                //   float4 displacement = _disortion * float4(v.normal, 0) * 
-                //       (SimplexNoise(v.vertex.xyz * _frequency + _Time.y) * 0.5 + 0.5);
-
-                return  _disortion * float4(
-                    SimplexNoise(p * _frequency + _Time.y * _speed),
-                    SimplexNoise(p * _frequency + _Time.y * _speed + 131.678),
-                    SimplexNoise(p * _frequency + _Time.y * _speed + 272.874),
-                    0);
-            }
 
             v2f vert (appdata v)
             {
                 v2f o;
-
-
-
-                float4 displacement = distortion(v.vertex.xyz);
-                float4 newPoint = v.vertex + displacement;
-                o.vertex = UnityObjectToClipPos(newPoint);
-
-                float3 normal = v.normal;
-                float3 offset = v.vertex.xyz + normal * 0.001;
-                offset += distortion(offset);
-                normal = normalize( offset - newPoint);
-
-                o.normal = mul(unity_ObjectToWorld, float4(normal, 0));
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.normal = mul(unity_ObjectToWorld, float4(v.normal, 0));
                 o.normal = normalize(o.normal);
 
                 o.tangent.xyz = mul(unity_ObjectToWorld, float4(v.tangent.xyz, 0));
@@ -93,7 +66,9 @@ Shader "Unlit/displace_reflection"
 
             sampler2D _NormalMap;
             sampler2D _DiffuseMap;
-            samplerCUBE _EnvironmentMap;
+            sampler2D _EnvironmentMap;
+            float4 _color;
+
 
             float3 worldNormalFromMap(v2f i)
             {
@@ -110,18 +85,14 @@ Shader "Unlit/displace_reflection"
 
             fixed4 frag(v2f i) : SV_Target
             {
-                float3 worldNormal = worldNormalFromMap(i);
+                float3 worldSpaceNormal = worldNormalFromMap(i);
 
-                float3 viewDir = _WorldSpaceCameraPos - i.worldPos;
-                viewDir = normalize(viewDir);
+                float3 viewSpaceNormal = mul(UNITY_MATRIX_V, float4(worldSpaceNormal, 0));
 
-                float3 n = worldNormal;
-                
-                //fixed4 col = brightness * tex2D(_DiffuseMap, i.uv);
-                float3 reflection = reflect(n, viewDir);
-                fixed4 col = texCUBE(_EnvironmentMap, reflection);
-                //col.rgb = n * 0.5 + 0.5;
-                return col;
+                // scale [-1, 1] to [0, 1]
+                float2 muv = viewSpaceNormal.xy * 0.5 + 0.5;
+
+                return tex2D(_EnvironmentMap, float2(muv.x, muv.y));;
             }
             ENDCG
         }

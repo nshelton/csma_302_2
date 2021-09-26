@@ -11,6 +11,8 @@ Shader "Unlit/Hologram"
         _Speed("Speed", Float) = -500
         _distortionFrequency("distortionFrequency", Float) = 0
         _distortionAmount("distortionAmount", Float) = 0
+        _brightness("brightness", float) = 0
+
     }
     SubShader
     {
@@ -52,6 +54,7 @@ Shader "Unlit/Hologram"
             float _Speed;
             float _distortionFrequency;
             float _distortionAmount;
+            float _brightness;
 
             v2f vert (appdata v)
             {

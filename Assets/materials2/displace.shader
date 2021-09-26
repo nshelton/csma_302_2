@@ -5,9 +5,15 @@ Shader "Unlit/displace"
         _NormalMap("normal map", 2D) = "blue" {}
         _DiffuseMap("Diffuse Map", 2D) = "white" {}
         _disortion("ditortion", float) = 0
-        _frequency ("frequency", float) = 0
-        _speed("speed", float) = 0
+        _Frequency("Frequency", Float) = 1000
+        _Speed("Speed", Float) = -500
+        _Width("Width", Float) = 0.6
         _distortionOffset("distortionOffset", float) = 0
+        _color("color", Color) = (1, 0, 0, 1)
+        _distortionFrequency("distortionFrequency", Float) = 0
+        _distortionAmount("distortionAmount", Float) = 0
+        _brightness("brightness", float) = 0
+
             
     }
     SubShader
@@ -22,7 +28,6 @@ Shader "Unlit/displace"
             #pragma fragment frag
 
             #include "UnityCG.cginc"
-            #include "Packages/jp.keijiro.noiseshader/Shader/SimplexNoise3D.hlsl"
 
             struct appdata
             {
@@ -43,33 +48,48 @@ Shader "Unlit/displace"
                 float3 normal : NORMAL;
                 float4 tangent : TANGENT;
                 float3 worldPos : TEXCOORD1;
+                float4 obj_vertex : TEXCOORD2;
 
             };
 
-            float  _disortion;
-            float  _frequency;
-            float  _speed;
-            float _distortionOffset;
+
+
 
             float4 distortion(float3 p) {
                 // different type of displacement along normal
                 //   float4 displacement = _disortion * float4(v.normal, 0) * 
                 //       (SimplexNoise(v.vertex.xyz * _frequency + _Time.y) * 0.5 + 0.5);
 
-                return saturate(p.y - _distortionOffset) * _disortion * float4(
-                    SimplexNoise(p * _frequency + _Time.y * _speed),
-                    SimplexNoise(p * _frequency + _Time.y * _speed + 131.678),
-                    SimplexNoise(p * _frequency + _Time.y * _speed + 272.874),
-                    0);
+                return 1;
             }
 
+
+            sampler2D _DiffuseMap;
+            sampler2D _NormalMap;
+            float4 _DiffuseMap_ST;
+            fixed4 _color;
+            float  _disortion;
+            float  _Frequency;
+            float  _Speed;
+            float _Width;
+            float _distortionOffset;
+            float _distortionFrequency;
+            float _distortionAmount;
+            float _brightness;
+
+            
             v2f vert (appdata v)
             {
                 v2f o;
+                o.obj_vertex = mul(unity_ObjectToWorld, v.vertex);
 
-                float4 displacement = distortion(v.vertex.xyz);
-                o.vertex = UnityObjectToClipPos(v.vertex + displacement);
+                float4 displacement = float4 (
+                    _distortionAmount * sin(_distortionFrequency * v.vertex.y + _Time.x * _Speed),
+                    0, 0, 0);
 
+                displacement += float4 (
+                    _distortionAmount/2 * sin(_distortionFrequency*2 * v.vertex.y + _Time.x * _Speed),
+                    0, 0, 0);
 
                 o.normal = mul(unity_ObjectToWorld, float4(v.normal, 0));
                 o.normal = normalize(o.normal);
@@ -82,11 +102,13 @@ Shader "Unlit/displace"
 
                 o.uv = v.uv;
 
+                o.vertex = UnityObjectToClipPos(v.vertex + displacement);
+                o.uv = TRANSFORM_TEX(v.uv, _DiffuseMap);
+
                 return o;
             }
 
-            sampler2D _NormalMap;
-            sampler2D _DiffuseMap;
+
 
             float3 worldNormalFromMap(v2f i)
             {
@@ -109,10 +131,14 @@ Shader "Unlit/displace"
                 lightDir = normalize(lightDir);
 
                 float3 n = worldNormal;
-                
                 float brightness = dot(n, lightDir);
-                fixed4 col = brightness * tex2D(_DiffuseMap, i.uv);
-               
+
+                fixed4 col = tex2D(_DiffuseMap, i.uv);
+
+                col =  _color * max(0, sin(i.obj_vertex.y * _Frequency + _Time.x * _Speed) + _Width);
+                col *=  1 - max(0, sin(i.obj_vertex.x * _Frequency + _Time.x * _Speed) + _Width);
+                col *=  1 - max(0, sin(i.obj_vertex.z * _Frequency + _Time.x * _Speed) + _Width);
+
 
                 return col;
             }
@@ -131,7 +157,6 @@ Shader "Unlit/displace"
             #pragma fragment frag
       
             #include "UnityCG.cginc"
-            #include "Packages/jp.keijiro.noiseshader/Shader/SimplexNoise3D.hlsl"
 
             struct appdata
             {
@@ -152,13 +177,9 @@ Shader "Unlit/displace"
             float3 normal : NORMAL;
             float4 tangent : TANGENT;
             float3 worldPos : TEXCOORD1;
+            float4 obj_vertex : TEXCOORD2;
 
         };
-
-        float  _disortion;
-        float  _frequency;
-        float  _speed;
-        float _distortionOffset;
 
 
         float4 distortion(float3 p) {
@@ -166,19 +187,34 @@ Shader "Unlit/displace"
             //   float4 displacement = _disortion * float4(v.normal, 0) * 
             //       (SimplexNoise(v.vertex.xyz * _frequency + _Time.y) * 0.5 + 0.5);
 
-            return  saturate(p.y - _distortionOffset) * _disortion * float4(
-                SimplexNoise(p * _frequency + _Time.y * _speed),
-                SimplexNoise(p * _frequency + _Time.y * _speed + 131.678),
-                SimplexNoise(p * _frequency + _Time.y * _speed + 272.874),
-                0);
+            return  1;
         }
+
+            sampler2D _DiffuseMap;
+            sampler2D _NormalMap;
+            float4 _DiffuseMap_ST;
+            fixed4 _color;
+            float  _disortion;
+            float  _Frequency;
+            float  _Speed;
+            float _Width;
+            float _distortionOffset;
+            float _distortionFrequency;
+            float _distortionAmount;
+            float _brightness;
 
         v2f vert(appdata v)
         {
             v2f o;
+            o.obj_vertex = mul(unity_ObjectToWorld, v.vertex);
 
-            float4 displacement = distortion(v.vertex.xyz);
-            o.vertex = UnityObjectToClipPos(v.vertex + displacement);
+            float4 displacement = float4 (
+                _distortionAmount * sin(_distortionFrequency * v.vertex.y + _Time.x * _Speed),
+                0, 0, 0);
+
+            displacement += float4 (
+                _distortionAmount/2 * sin(_distortionFrequency*2 * v.vertex.y + _Time.x * _Speed),
+                0, 0, 0);
 
             o.normal = mul(unity_ObjectToWorld, float4(v.normal, 0));
             o.normal = normalize(o.normal);
@@ -191,11 +227,13 @@ Shader "Unlit/displace"
 
             o.uv = v.uv;
 
+            o.vertex = UnityObjectToClipPos(v.vertex + displacement);
+            o.uv = TRANSFORM_TEX(v.uv, _DiffuseMap);
+
             return o;
         }
 
-        sampler2D _NormalMap;
-        sampler2D _DiffuseMap;
+
 
         float3 worldNormalFromMap(v2f i)
         {
@@ -218,9 +256,13 @@ Shader "Unlit/displace"
             lightDir = normalize(lightDir);
 
             float3 n = worldNormal;
-
             float brightness = dot(n, lightDir);
-            fixed4 col = brightness * tex2D(_DiffuseMap, i.uv);
+
+            fixed4 col = tex2D(_DiffuseMap, i.uv);
+
+            col =  _color * max(0, sin(i.obj_vertex.y * _Frequency + _Time.x * _Speed) + _Width);
+            col *=  1 - max(0, sin(i.obj_vertex.x * _Frequency + _Time.x * _Speed) + _Width);
+            col *=  1 - max(0, sin(i.obj_vertex.z * _Frequency + _Time.x * _Speed) + _Width);
 
 
             return col;
