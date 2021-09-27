@@ -1,9 +1,10 @@
-Shader "Unlit/displace"
+Shader "Unlit/displaceReflect"
 {
-    Properties
+   Properties
     {
         _NormalMap("normal map", 2D) = "blue" {}
         _DiffuseMap("Diffuse Map", 2D) = "white" {}
+        _EnvironmentMap("Environment Map", CUBE) = "white" {}
         _disortion("ditortion", float) = 0
         _frequency ("frequency", float) = 0
     }
@@ -20,8 +21,7 @@ Shader "Unlit/displace"
 
             #include "UnityCG.cginc"
             #include "Packages/jp.keijiro.noiseshader/Shader/SimplexNoise3D.hlsl"
-            #include "displaceInclude.cginc"
-
+            #include "displaceReflectInclude.cginc"
             
             ENDCG
         }
@@ -38,7 +38,7 @@ Shader "Unlit/displace"
       
             #include "UnityCG.cginc"
             #include "Packages/jp.keijiro.noiseshader/Shader/SimplexNoise3D.hlsl"
-            #include "displaceInclude.cginc"
+            #include "displaceReflectInclude.cginc"
                 
             ENDCG
             

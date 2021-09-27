@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _DiffuseMap:
+        m_Texture: {fileID: 2800000, guid: 3de1fa691f8b8d545a7b16a2804af7b2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -27,7 +31,9 @@ Material:
         m_Texture: {fileID: 2800000, guid: 96d2b70c72534d84288d08f32b1050e3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
+    m_Floats:
+    - _disortion: 0.3
+    - _frequency: 0
     m_Colors:
     - _color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
